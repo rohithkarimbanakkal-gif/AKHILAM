@@ -119,8 +119,8 @@ if uploaded_file is not None:
             st.success("Data processed successfully!")
         else:
             st.info("NASA file uploaded. Specialized processing will be added next.")
-    except Exception as e:
-        st.error(f"Error processing file: 
+    except Exception as e:  
+     st.error(f"Error processing file:    
         {e}")
         st.success("Data processed successfully!")
 
