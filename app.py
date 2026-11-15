@@ -159,8 +159,7 @@ st.subheader("🗺️ Global Map")
 
 st.info(
     "Interactive Earth observation map "
-    "will be added in the next developmen
-    t stage.")
+    "will be added in the next development stage.")
     
 
     
