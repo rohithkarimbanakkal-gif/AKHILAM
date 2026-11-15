@@ -108,6 +108,16 @@ if uploaded_file is not None:
     st.success("NASA data file uploaded successfully!")
     st.write("File name:", uploaded_file.name)
     st.write("File size:", uploaded_file.size, "bytes")
-    
+        st.subheader("NASA Data Preview")
+
+    try:
+        df = pd.read_csv(uploaded_file)
+        st.dataframe(df.head(10), use_container_width=True)
+
+        st.success("Data processed successfully!")
+
+    except Exception as e:
+        st.warning("This file may not be a CSV file.")
+        st.write(e)
     
 
