@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -95,5 +94,6 @@ st.markdown("---")
 st.caption(
     "TerraLens | NASA Space Apps Challenge Project | "
     "Scientific data
+
 integration in progress"
 )
