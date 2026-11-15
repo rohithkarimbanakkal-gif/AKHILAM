@@ -95,6 +95,20 @@ st.caption(
     "TerraLens | NASA Space Apps Challenge Project | "
     "Scientific data integration in progress"
 )
+st.markdown("---")
+
+st.markdown("### 🛰️ NASA Data Upload")
+
+uploaded_file = st.file_uploader(
+    "Upload your NASA Earth observation data",
+    type=["nc", "csv", "zip"]
+)
+
+if uploaded_file is not None:
+    st.success("NASA data file uploaded successfully!")
+    st.write("File name:", uploaded_file.name)
+    st.write("File size:", uploaded_file.size, "byt
+es")
 
     
 
