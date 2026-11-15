@@ -93,9 +93,8 @@ st.markdown("---")
 
 st.caption(
     "TerraLens | NASA Space Apps Challenge Project | "
-    "Scientific data
-
-integration in progress"
+    "Scientific data integration in progress"
+)
 
     
-)
+
