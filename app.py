@@ -107,8 +107,7 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     st.success("NASA data file uploaded successfully!")
     st.write("File name:", uploaded_file.name)
-    st.write("File size:", uploaded_file.size, "byt
-es")
-
+    st.write("File size:", uploaded_file.size, "bytes")
+    
     
 
