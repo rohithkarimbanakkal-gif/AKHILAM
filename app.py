@@ -103,7 +103,6 @@ uploaded_file = st.file_uploader(
     "Upload your NASA Earth observation data",
     type=["nc", "csv", "zip"]
 )
-
 if uploaded_file is not None:
     st.success("NASA data file uploaded successfully!")
     st.write("File name:", uploaded_file.name)
@@ -119,5 +118,7 @@ if uploaded_file is not None:
     except Exception as e:
         st.warning("This file may not be a CSV file.")
         st.write(e)
+
+
     
 
