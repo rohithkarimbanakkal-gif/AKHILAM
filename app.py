@@ -127,6 +127,42 @@ if uploaded_file is not None:
         st.warning("This file may not be a CSV file.")
         st.write
         (e)
+        
+st.divider()
+
+st.header("🌍 TerraLens Dashboard")
+st.write("NASA Earth Observation Analysis")
+
+st.subheader("Global Earth Monitoring")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Data Source", "NASA")
+
+with col2:
+    st.metric("Study Area", "Global")
+
+with col3:
+    st.metric("Status", "Awaiting Data")
+
+st.divider()
+
+st.subheader("🌱 NDVI Analysis")
+
+st.info(
+    "NASA vegetation data visualization "
+    "will appear here after data processing."
+)
+
+st.subheader("🗺️ Global Map")
+
+st.info(
+    "Interactive Earth observation map "
+    "will be added in the next developmen
+    t stage."
+    )
+
 
     
 
