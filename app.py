@@ -117,8 +117,8 @@ if uploaded_file is not None:
 
     except Exception as e:
         st.warning("This file may not be a CSV file.")
-        st.write(e)
-
+        st.write
+        (e)
 
     
 
