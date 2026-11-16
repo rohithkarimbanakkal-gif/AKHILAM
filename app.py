@@ -322,16 +322,17 @@ def load_nasa_netcdf(uploaded_file):
 if uploaded_file is not None:
     nasa_dataset = load_nasa_netcdf(uploaded_file)
 
-    if nasa_dataset is not None:
+        if nasa_dataset is not None:
         st.success("NASA NetCDF data loaded successfully!")
 
         st.subheader("NASA Dataset Information")
         st.write("Dimensions:", nasa_dataset.sizes)
         st.write("Variables:", list(nasa_dataset.data_vars))
+
         st.subheader("NASA Data Variables")
 
-for variable in nasa_dataset.data_vars:
-    st.write(variable)
+        for variable in nasa_dataset.data_vars:
+            st.write(variable)
     
 
     
