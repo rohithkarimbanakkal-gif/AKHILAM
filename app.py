@@ -162,6 +162,29 @@ st.subheader("🗺️ Global Map")
 st.info(
     "Interactive Earth observation map "
     "will be added in the next development stage.")
+
+# ==================================
+# TERRALENS - NASA NETCDF DATA READER
+# ==================================
+
+def load_nasa_netcdf(uploaded_file):
+    try:
+        file_bytes = io.BytesIO(uploaded_file.getvalue())
+
+        dataset = xr.open_dataset(
+            file_bytes,
+            engine="netcdf4"
+        )
+
+        dataset.load()
+        dataset.close()
+
+        return dataset
+
+    except Exception as e:
+        st.error(f"NASA data reading error: {e}")
+        retur
+        n None
     
 
     
