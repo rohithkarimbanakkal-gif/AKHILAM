@@ -213,16 +213,49 @@ latitude, longitude = region_coordinates[study_area]
 
 latitude, longitude = region_coordinates[study_area]
 
+# AKHILAM REGIONAL MAP
+
 earth_map = folium.Map(
     location=[latitude, longitude],
-    zoom_start=2 if study_area == "Global" else 2,
+    zoom_start=2,
     tiles="OpenStreetMap"
 )
+
 if study_area == "Asia":
     earth_map.fit_bounds([
         [-10, 60],
         [65, 150]
-    ])if study_area == "Asia" else None
+    ])
+
+elif study_area == "Africa":
+    earth_map.fit_bounds([
+        [-40, -20],
+        [40, 55]
+    ])
+
+elif study_area == "Europe":
+    earth_map.fit_bounds([
+        [30, -15],
+        [75, 45]
+    ])
+
+elif study_area == "North America":
+    earth_map.fit_bounds([
+        [5, -170],
+        [85, -50]
+    ])
+
+elif study_area == "South America":
+    earth_map.fit_bounds([
+        [-60, -85],
+        [15, -30]
+    ])
+
+elif study_area == "Oceania":
+    earth_map.fit_bounds([
+        [-50, 110],
+        [0, 180]
+    ])
 
 folium.Marker(
     [latitude, longitude],
