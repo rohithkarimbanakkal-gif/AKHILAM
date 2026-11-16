@@ -231,7 +231,8 @@ folium.Marker(
 st_folium(
     earth_map,
     width=700,
-    height=500
+    height=500,
+    key=f"map_{study_area}"
 )
 
 
