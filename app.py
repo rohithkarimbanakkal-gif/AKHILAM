@@ -213,9 +213,7 @@ map_data = pd.DataFrame({
 
 st.map(map_data)
 
-st.info(
-    "Interactive Earth observation map "
-    "will be added in the next development stage.")
+
 
 # ==================================
 # TERRALENS - NASA NETCDF DATA READER
