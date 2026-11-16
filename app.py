@@ -189,9 +189,34 @@ st.divider()
 
 st.subheader("🌱 NDVI Analysis")
 
+st.markdown("### 🌿 Vegetation Health Analysis")
+
+st.write(
+    "Analyze vegetation conditions using "
+    "NASA MODIS satellite observations."
+)
+
+ndvi_min = st.slider(
+    "Minimum NDVI",
+    min_value=-1.0,
+    max_value=1.0,
+    value=0.2,
+    step=0.1
+)
+
+ndvi_max = st.slider(
+    "Maximum NDVI",
+    min_value=-1.0,
+    max_value=1.0,
+    value=0.8,
+    step=0.1
+)
+
+st.write("Selected NDVI Range:", ndvi_min, "to", ndvi_max)
+
 st.info(
-    "NASA vegetation data visualization "
-    "will appear here after data processing."
+    "Upload a processed NASA MODIS vegetation dataset "
+    "to begin actual NDVI analysis."
 )
 
 st.subheader("🗺️ Global Map")
