@@ -221,11 +221,15 @@ fig = px.scatter_geo(
 
 fig.update_layout(
     geo=dict(
-        showland=True,
-        landcolor="lightgreen",
-        showocean=True,
-        oceancolor="lightblue",
-        showcountries=True
+    scope="world",
+    showland=True,
+    landcolor="lightgreen",
+    showocean=True,
+    oceancolor="lightblue",
+    showcountries=True,
+    showcoastlines=True,
+    coastlinecolor="black",
+    resolution=50
     )
 )
 
