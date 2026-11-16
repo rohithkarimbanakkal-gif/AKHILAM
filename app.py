@@ -209,35 +209,26 @@ region_coordinates = {
 
 latitude, longitude = region_coordinates[study_area]
 
-map_data = pd.DataFrame({
-    "latitude": [latitude],
-    "longitude": [longitude]
-})
+# AKHILAM INTERACTIVE REGIONAL MAP
 
-fig = px.scatter_geo(
-    map_data,
-    lat="latitude",
-    lon="longitude",
-    projection="natural earth",
-    title=f"TerraLens - {study_area} Investigation"
+latitude, longitude = region_coordinates[study_area]
+
+earth_map = folium.Map(
+    location=[latitude, longitude],
+    zoom_start=3 if study_area == "Global" else 4,
+    tiles="OpenStreetMap"
 )
 
-fig.update_layout(
-    geo=dict(
-    scope="world",
-    showland=True,
-    landcolor="lightgreen",
-    showocean=True,
-    oceancolor="lightblue",
-    showcountries=True,
-    showcoastlines=True,
-    coastlinecolor="black",
-    resolution=50
-    )
+folium.Marker(
+    [latitude, longitude],
+    popup=f"AKHILAM - {study_area}"
+).add_to(earth_map)
+
+st_folium(
+    earth_map,
+    width=700,
+    height=500
 )
-
-st.plotly_chart(fig, use_container_width=True)
-
 
 
 # ==================================
