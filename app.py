@@ -215,7 +215,7 @@ latitude, longitude = region_coordinates[study_area]
 
 earth_map = folium.Map(
     location=[latitude, longitude],
-    zoom_start=2 if study_area == "Global" else 2,
+    zoom_start=2 if study_area == "Global" else 1,
     tiles="OpenStreetMap"
 )
 
