@@ -137,6 +137,40 @@ st.write("NASA Earth Observation Analysis")
 
 st.subheader("Global Earth Monitoring")
 
+# TERRALENS INVESTIGATION CONTROLS
+
+st.markdown("### 🌍 Select Investigation Area")
+
+study_area = st.selectbox(
+    "Choose your study region",
+    [
+        "Global",
+        "Asia",
+        "Africa",
+        "Europe",
+        "North America",
+        "South America",
+        "Oceania"
+    ]
+)
+
+st.markdown("### 📅 Select Study Period")
+
+start_year = st.selectbox(
+    "Start Year",
+    list(range(2001, 2027)),
+    index=0
+)
+
+end_year = st.selectbox(
+    "End Year",
+    list(range(start_year, 2027)),
+    index=len(list(range(start_year, 2027))) - 1
+)
+
+st.write("Selected Region:", study_area)
+st.write("Selected Period:", start_year, "-", end_year)
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
