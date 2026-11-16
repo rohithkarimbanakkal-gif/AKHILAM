@@ -13,8 +13,9 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🌍 TerraLens")
+st.title("AKHILAM")
 st.subheader("Earth System Trend Detective")
+st.caption("Earth Observation & Analysis Platform")
 
 st.markdown(
     "Investigating environmental changes "
