@@ -70,8 +70,6 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-st.write("Map projection:", fig.layout.geo.projection.type)
-st.write("Selected region:", study_area)
 
 st.warning(
     "This graph is illustrative. "
