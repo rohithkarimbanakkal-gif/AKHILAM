@@ -4,6 +4,8 @@ import plotly.express as px
 import numpy as np
 import xarray as xr
 import io
+import folium
+from streamlit_folium import st_folium
 
 st.set_page_config(
     page_title="TerraLens",
