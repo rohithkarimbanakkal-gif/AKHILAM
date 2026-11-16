@@ -192,6 +192,26 @@ st.info(
 )
 
 st.subheader("🗺️ Global Map")
+# REGIONAL INVESTIGATION MAP
+
+region_coordinates = {
+    "Global": (0, 0),
+    "Asia": (34, 100),
+    "Africa": (0, 20),
+    "Europe": (54, 15),
+    "North America": (40, -100),
+    "South America": (-15, -60),
+    "Oceania": (-25, 135)
+}
+
+latitude, longitude = region_coordinates[study_area]
+
+map_data = pd.DataFrame({
+    "latitude": [latitude],
+    "longitude": [longitude]
+})
+
+st.map(map_data)
 
 st.info(
     "Interactive Earth observation map "
