@@ -218,10 +218,11 @@ earth_map = folium.Map(
     zoom_start=2 if study_area == "Global" else 2,
     tiles="OpenStreetMap"
 )
-earth_map.fit_bounds([
-    [-10, 25],
-    [75, 180]
-]) if study_area == "Asia" else None
+if study_area == "Asia":
+    earth_map.fit_bounds([
+        [-10, 60],
+        [65, 150]
+    ])if study_area == "Asia" else None
 
 folium.Marker(
     [latitude, longitude],
