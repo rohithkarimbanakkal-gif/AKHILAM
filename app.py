@@ -183,8 +183,7 @@ def load_nasa_netcdf(uploaded_file):
 
     except Exception as e:
         st.error(f"NASA data reading error: {e}")
-        retur
-        n None
+        return None
     
 
     
