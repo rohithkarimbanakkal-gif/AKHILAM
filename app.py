@@ -211,7 +211,25 @@ map_data = pd.DataFrame({
     "longitude": [longitude]
 })
 
-st.map(map_data)
+fig = px.scatter_geo(
+    map_data,
+    lat="latitude",
+    lon="longitude",
+    projection="natural earth",
+    title=f"TerraLens - {study_area} Investigation"
+)
+
+fig.update_layout(
+    geo=dict(
+        showland=True,
+        landcolor="lightgreen",
+        showocean=True,
+        oceancolor="lightblue",
+        showcountries=True
+    )
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 
 
