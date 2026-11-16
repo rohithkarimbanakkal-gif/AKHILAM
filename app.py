@@ -328,6 +328,10 @@ if uploaded_file is not None:
         st.subheader("NASA Dataset Information")
         st.write("Dimensions:", nasa_dataset.sizes)
         st.write("Variables:", list(nasa_dataset.data_vars))
+        st.subheader("NASA Data Variables")
+
+for variable in nasa_dataset.data_vars:
+    st.write(variable)
     
 
     
