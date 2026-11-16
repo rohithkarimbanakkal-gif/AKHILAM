@@ -215,9 +215,13 @@ latitude, longitude = region_coordinates[study_area]
 
 earth_map = folium.Map(
     location=[latitude, longitude],
-    zoom_start=2 if study_area == "Global" else 1,
+    zoom_start=2 if study_area == "Global" else 2,
     tiles="OpenStreetMap"
 )
+earth_map.fit_bounds([
+    [-10, 25],
+    [75, 180]
+]) if study_area == "Asia" else None
 
 folium.Marker(
     [latitude, longitude],
