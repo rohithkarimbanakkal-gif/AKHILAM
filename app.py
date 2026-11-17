@@ -46,20 +46,27 @@ if isinstance(location, dict):
         )
 
 # Search location
-search_location = None
+# Search location
+if "search_location" not in st.session_state:
+    st.session_state.search_location = None
 
-if place_name:
+if search_button and place_name:
     try:
         geolocator = Nominatim(
             user_agent="akhilam_navigation"
         )
 
-        search_location = geolocator.geocode(
-    place_name + ", India",
-    timeout=20
+        found_location = geolocator.geocode(
+            place_name + ", India",
+            timeout=20
         )
+
+        st.session_state.search_location = found_location
+
     except Exception as e:
         st.error(f"Location search error: {e}")
+
+search_location = st.session_state.search_location
 # Select map position
 if search_location:
     map_lat = search_location.latitude
