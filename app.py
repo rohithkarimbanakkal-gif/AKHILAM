@@ -130,6 +130,7 @@ if live_location:
          font-family:Arial;pointer-events:auto;">
 
         <button id="akhilam-enable-compass"
+        onclick="document.getElementById('akhilam-compass-status').textContent='Button tap detected';"
                 type="button"
                 style="background:#1677ff;color:white;
                 border:none;padding:10px 15px;
