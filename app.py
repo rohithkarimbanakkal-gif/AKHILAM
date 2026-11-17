@@ -6,6 +6,7 @@ import xarray as xr
 import io
 import folium
 from streamlit_folium import st_folium
+from streamlit_geolocation import streamlit_geolocation
 
 st.set_page_config(
     page_title="TerraLens",
