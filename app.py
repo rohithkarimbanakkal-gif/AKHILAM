@@ -322,7 +322,7 @@ def load_nasa_netcdf(uploaded_file):
 if uploaded_file is not None:
     nasa_dataset = load_nasa_netcdf(uploaded_file)
 
-    if nasa_dataset is not None:
+        if nasa_dataset is not None:
         st.success("NASA NetCDF data loaded successfully!")
 
         st.subheader("NASA Dataset Information")
@@ -333,7 +333,8 @@ if uploaded_file is not None:
 
         for variable in nasa_dataset.data_vars:
             st.write(variable)
-                    st.subheader("NASA Data Preview")
+
+        st.subheader("NASA Data Preview")
 
         for variable in nasa_dataset.data_vars:
             st.write(f"Preview of {variable}")
