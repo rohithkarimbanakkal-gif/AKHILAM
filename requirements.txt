@@ -11,3 +11,4 @@ streamlit-folium
 h5netcdf
 h5py
 pydeck
+geopy
