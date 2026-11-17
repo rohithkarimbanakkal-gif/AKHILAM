@@ -55,8 +55,8 @@ if place_name:
         )
 
         search_location = geolocator.geocode(
-            place_name + ", India",
-            timeout=10
+    place_name + ", India",
+    timeout=20
         )
 
     except Exception:
