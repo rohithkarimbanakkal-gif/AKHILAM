@@ -35,6 +35,7 @@ with st.form("akhilam_search"):
 st.write("📍 **Find My Live Location**")
 
 location = streamlit_geolocation()
+st.write("GPS DEBUG:", location)
 
 live_location = None
 
