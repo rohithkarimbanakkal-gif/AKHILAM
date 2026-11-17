@@ -122,7 +122,7 @@ if live_location:
     ).add_to(akhilam_map)
     from branca.element import Element
 
-        compass_html = f"""
+    compass_html = f"""
     <div id="akhilam-compass-panel"
          style="position:fixed;top:12px;left:55px;
          z-index:999999;background:white;padding:10px;
