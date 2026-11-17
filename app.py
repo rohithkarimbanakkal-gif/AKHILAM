@@ -32,6 +32,8 @@ with st.form("akhilam_search"):
     )
 
 # Get device location
+st.write("📍 **Find My Live Location**")
+
 location = streamlit_geolocation()
 
 live_location = None
