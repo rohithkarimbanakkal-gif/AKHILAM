@@ -177,6 +177,27 @@ if live_location and search_location:
 
 elif not live_location:
     st.info("Tap the location symbol to get your starting point.")
+    # AKHILAM Journey Controls
+
+if live_location and search_location:
+
+    if "journey_started" not in st.session_state:
+        st.session_state.journey_started = False
+
+    if not st.session_state.journey_started:
+
+        if st.button("▶ Start Journey", type="primary"):
+            st.session_state.journey_started = True
+            st.rerun()
+
+    else:
+        st.success("🟢 Your journey has started!")
+
+        st.write("📍 Destination:", place_name)
+
+        if st.button("⏹ Stop Journey"):
+            st.session_state.journey_started = False
+            st.rerun()
 
 st_folium(
     akhilam_map,
