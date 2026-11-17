@@ -120,42 +120,84 @@ if live_location:
             icon_anchor=(20, 20)
         )
     ).add_to(akhilam_map)
-    from branca.element import Element
+        from branca.element import Element
 
-    compass_script = f"""
+    compass_html = f"""
+    <div id="akhilam-compass-panel"
+         style="position:fixed;top:12px;left:55px;
+         z-index:99999;background:white;padding:10px;
+         border-radius:10px;box-shadow:0 2px 8px #888;
+         font-family:Arial;">
+
+        <button id="akhilam-enable-compass"
+                type="button"
+                style="background:#1677ff;color:white;
+                border:none;padding:10px 15px;
+                border-radius:8px;font-weight:bold;">
+            Enable Compass
+        </button>
+
+        <div id="akhilam-compass-status"
+             style="font-size:12px;margin-top:6px;color:#333;">
+            Compass not enabled
+        </div>
+    </div>
+
     <script>
     window.addEventListener("load", function() {{
+
         const marker = {live_marker.get_name()};
+        const button = document.getElementById(
+            "akhilam-enable-compass"
+        );
+        const status = document.getElementById(
+            "akhilam-compass-status"
+        );
+
         let absoluteHeadingSeen = false;
+        let gotReading = false;
+        let started = false;
 
         function updateHeading(event) {{
+
             let heading = null;
+
+            const isAbsolute =
+                event.absolute === true ||
+                event.type === "deviceorientationabsolute" ||
+                typeof event.webkitCompassHeading === "number";
+
+            if (absoluteHeadingSeen && !isAbsolute) {{
+                return;
+            }}
+
+            if (isAbsolute) {{
+                absoluteHeadingSeen = true;
+            }}
 
             if (
                 typeof event.webkitCompassHeading === "number"
             ) {{
                 heading = event.webkitCompassHeading;
-                absoluteHeadingSeen = true;
 
             }} else if (
-                (event.type === "deviceorientationabsolute" ||
-                 event.absolute === true) &&
-                typeof event.alpha === "number"
-            ) {{
-                heading = (360 - event.alpha + 360) % 360;
-                absoluteHeadingSeen = true;
-
-            }} else if (
-                !absoluteHeadingSeen &&
                 typeof event.alpha === "number"
             ) {{
                 heading = (360 - event.alpha + 360) % 360;
             }}
 
-            if (heading === null) return;
+            if (heading === null) {{
+                return;
+            }}
+
+            gotReading = true;
 
             const element = marker.getElement();
-            if (!element) return;
+
+            if (!element) {{
+                status.textContent = "Compass reading received.";
+                return;
+            }}
 
             const arrow = element.querySelector(
                 ".akhilam-heading-arrow"
@@ -165,26 +207,87 @@ if live_location:
                 arrow.style.transform =
                     "rotate(" + heading + "deg)";
             }}
+
+            status.textContent =
+                "Compass: " + Math.round(heading) + "°" +
+                (isAbsolute ? " (Absolute)" : " (Relative)");
         }}
 
-        window.addEventListener(
-            "deviceorientationabsolute",
-            updateHeading,
-            true
-        );
+        async function enableCompass() {{
 
-        window.addEventListener(
-            "deviceorientation",
-            updateHeading,
-            true
-        );
+            if (started) return;
+
+            try {{
+
+                if (!window.isSecureContext) {{
+                    status.textContent =
+                        "HTTPS connection required.";
+                    return;
+                }}
+
+                if (!("DeviceOrientationEvent" in window)) {{
+                    status.textContent =
+                        "Orientation sensor not supported.";
+                    return;
+                }}
+
+                if (
+                    typeof DeviceOrientationEvent.requestPermission
+                    === "function"
+                ) {{
+                    const permission =
+                        await DeviceOrientationEvent.requestPermission();
+
+                    if (permission !== "granted") {{
+                        status.textContent =
+                            "Compass permission denied.";
+                        return;
+                    }}
+                }}
+
+                started = true;
+
+                window.addEventListener(
+                    "deviceorientation",
+                    updateHeading,
+                    true
+                );
+
+                window.addEventListener(
+                    "deviceorientationabsolute",
+                    updateHeading,
+                    true
+                );
+
+                status.textContent =
+                    "Waiting for compass sensor...";
+
+                button.textContent = "Compass Enabled";
+
+                window.setTimeout(function() {{
+                    if (!gotReading) {{
+                        status.textContent =
+                            "No compass readings received.";
+                    }}
+                }}, 5000);
+
+            }} catch (error) {{
+
+                status.textContent =
+                    "Compass error: " + error.message;
+
+            }}
+        }}
+
+        button.addEventListener("click", enableCompass);
+
     }});
     </script>
     """
 
     akhilam_map.get_root().html.add_child(
-        Element(compass_script)
-    )
+        Element(compass_html)
+)
 
 # Show searched destination
 if search_location:
