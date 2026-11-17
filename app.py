@@ -18,10 +18,17 @@ st.subheader("🗺️ AKHILAM Smart Navigation")
 
 from geopy.geocoders import Nominatim
 
-place_name = st.text_input(
-    "🔍 Search any place in India",
-    placeholder="Example: Kochi, Kerala"
-)
+with st.form("akhilam_search"):
+    place_name = st.text_input(
+        "🔍 Search any place in India",
+        placeholder="Example: Kochi, Kerala"
+    )
+
+    search_button = st.form_submit_button(
+        "ENTER",
+        type="primary",
+        use_container_width=True
+    )
 
 search_location = None
 
