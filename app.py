@@ -16,17 +16,52 @@ st.set_page_config(
 st.title("AKHILAM")
 st.subheader("🗺️ AKHILAM Smart Navigation")
 
-# Kerala Interactive Map
-akhilam_map = folium.Map(
-    location=[10.8505, 76.2711],
-    zoom_start=7
+from geopy.geocoders import Nominatim
+
+place_name = st.text_input(
+    "🔍 Search any place in India",
+    placeholder="Example: Kochi, Kerala"
 )
 
-folium.Marker(
-    [10.8505, 76.2711],
-    popup="Kerala",
-    tooltip="AKHILAM Map"
-).add_to(akhilam_map)
+search_location = None
+
+if place_name:
+    try:
+        geolocator = Nominatim(
+            user_agent="akhilam_navigation"
+        )
+
+        search_location = geolocator.geocode(
+            place_name + ", India",
+            timeout=10
+        )
+
+    except Exception:
+        st.warning("Location search unavailable. Try again.")
+
+if search_location:
+    map_lat = search_location.latitude
+    map_lon = search_location.longitude
+    map_zoom = 12
+
+    st.success(f"Location found: {search_location.address}")
+
+else:
+    map_lat = 10.8505
+    map_lon = 76.2711
+    map_zoom = 7
+
+akhilam_map = folium.Map(
+    location=[map_lat, map_lon],
+    zoom_start=map_zoom
+)
+
+if search_location:
+    folium.Marker(
+        [map_lat, map_lon],
+        popup=place_name,
+        tooltip="Searched Location"
+    ).add_to(akhilam_map)
 
 st_folium(
     akhilam_map,
