@@ -79,32 +79,110 @@ else:
     map_lon = 76.2711
     map_zoom = 7
 
+
 # Create map
 akhilam_map = folium.Map(
     location=[map_lat, map_lon],
     zoom_start=map_zoom
 )
 
-if search_location:
+# Show live location
+if live_location:
     folium.Marker(
-        [map_lat, map_lon],
-        popup=place_name,
-        tooltip="Searched Location"
-    ).add_to(akhilam_map)
-
-elif live_location:
-    folium.Marker(
-        [map_lat, map_lon],
+        live_location,
         popup="Your Current Location",
-        tooltip="📍 You are here",
+        tooltip="You are here",
         icon=folium.Icon(color="blue", icon="user")
     ).add_to(akhilam_map)
+
+# Show searched destination
+if search_location:
+    destination = (
+        search_location.latitude,
+        search_location.longitude
+    )
+
+    folium.Marker(
+        destination,
+        popup=place_name,
+        tooltip="Destination",
+        icon=folium.Icon(color="red")
+    ).add_to(akhilam_map)
+
+# Route calculation function
+@st.cache_data(ttl=300)
+def get_akhilam_route(start_lat, start_lon, end_lat, end_lon):
+    import json
+    from urllib.request import Request, urlopen
+
+    route_url = (
+        "https://router.project-osrm.org/route/v1/driving/"
+        f"{start_lon},{start_lat};{end_lon},{end_lat}"
+        "?overview=full&geometries=geojson"
+    )
+
+    request = Request(
+        route_url,
+        headers={"User-Agent": "AKHILAM/1.0"}
+    )
+
+    with urlopen(request, timeout=20) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+# Draw route
+if live_location and search_location:
+    try:
+        route_data = get_akhilam_route(
+            live_location[0],
+            live_location[1],
+            destination[0],
+            destination[1]
+        )
+
+        if route_data.get("code") == "Ok" and route_data.get("routes"):
+            route = route_data["routes"][0]
+
+            coordinates = route["geometry"]["coordinates"]
+
+            route_points = [
+                [lat, lon] for lon, lat in coordinates
+            ]
+
+            folium.PolyLine(
+                route_points,
+                color="blue",
+                weight=6,
+                tooltip="AKHILAM Driving Route"
+            ).add_to(akhilam_map)
+
+            akhilam_map.fit_bounds([
+                live_location,
+                destination
+            ])
+
+            st.success(
+                f"Distance: {route['distance'] / 1000:.2f} km"
+            )
+
+            st.info(
+                f"Estimated travel time: "
+                f"{route['duration'] / 60:.0f} minutes"
+            )
+
+        else:
+            st.warning("No driving route was found.")
+
+    except Exception:
+        st.warning("Route service unavailable. Please try again.")
+
+elif not live_location:
+    st.info("Tap the location symbol to get your starting point.")
 
 st_folium(
     akhilam_map,
     width=700,
     height=450
-)
+        )
 st.subheader("Earth System Trend Detective")
 st.caption("Earth Observation & Analysis Platform")
 
@@ -428,3 +506,4 @@ if uploaded_file is not None:
         for variable in nasa_dataset.data_vars:
             st.write(f"Preview of {variable}")
             st.write(nasa_dataset[variable].values[:5])
+
