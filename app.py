@@ -247,6 +247,7 @@ if live_location:
                             return;
                         }}
                     }}
+window.akhilamEnableCompass = enableCompass;
 
                     started = true;
 
