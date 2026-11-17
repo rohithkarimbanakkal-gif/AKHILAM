@@ -109,6 +109,63 @@ if live_location:
             icon_anchor=(20, 20)
         )
     ).add_to(akhilam_map)
+        from branca.element import Element
+
+    compass_script = f"""
+    <script>
+    window.addEventListener("load", function() {{
+        const marker = {live_marker.get_name()};
+
+        function updateHeading(event) {{
+            let heading = null;
+
+            if (typeof event.webkitCompassHeading === "number") {{
+                heading = event.webkitCompassHeading;
+            }} else if (
+                event.type === "deviceorientationabsolute" &&
+                typeof event.alpha === "number"
+            ) {{
+                heading = (360 - event.alpha) % 360;
+            }} else if (
+                event.absolute === true &&
+                typeof event.alpha === "number"
+            ) {{
+                heading = (360 - event.alpha) % 360;
+            }}
+
+            if (heading === null) return;
+
+            const element = marker.getElement();
+            if (!element) return;
+
+            const arrow = element.querySelector(
+                ".akhilam-heading-arrow"
+            );
+
+            if (arrow) {{
+                arrow.style.transform =
+                    "rotate(" + heading + "deg)";
+            }}
+        }}
+
+        window.addEventListener(
+            "deviceorientationabsolute",
+            updateHeading,
+            true
+        );
+
+        window.addEventListener(
+            "deviceorientation",
+            updateHeading,
+            true
+        );
+    }});
+    </script>
+    """
+
+    akhilam_map.get_root().html.add_child(
+        Element(compass_script)
+    )
 
 # Show searched destination
 if search_location:
