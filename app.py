@@ -58,9 +58,8 @@ if place_name:
     place_name + ", India",
     timeout=20
         )
-
     except Exception as e:
-    st.error(f"Location search error: {e}")
+        st.error(f"Location search error: {e}")
 # Select map position
 if search_location:
     map_lat = search_location.latitude
