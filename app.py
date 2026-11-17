@@ -59,9 +59,8 @@ if place_name:
     timeout=20
         )
 
-    except Exception:
-        st.warning("Location search unavailable. Try again.")
-
+    except Exception as e:
+    st.error(f"Location search error: {e}")
 # Select map position
 if search_location:
     map_lat = search_location.latitude
