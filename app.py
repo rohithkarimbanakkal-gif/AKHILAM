@@ -333,3 +333,8 @@ if uploaded_file is not None:
 
         for variable in nasa_dataset.data_vars:
             st.write(variable)
+                    st.subheader("NASA Data Preview")
+
+        for variable in nasa_dataset.data_vars:
+            st.write(f"Preview of {variable}")
+            st.write(nasa_dataset[variable].values[:5])
