@@ -120,28 +120,36 @@ if live_location:
             icon_anchor=(20, 20)
         )
     ).add_to(akhilam_map)
-    from branca.element import Element
+        from branca.element import Element
 
     compass_script = f"""
     <script>
     window.addEventListener("load", function() {{
         const marker = {live_marker.get_name()};
+        let absoluteHeadingSeen = false;
 
         function updateHeading(event) {{
             let heading = null;
 
-            if (typeof event.webkitCompassHeading === "number") {{
+            if (
+                typeof event.webkitCompassHeading === "number"
+            ) {{
                 heading = event.webkitCompassHeading;
+                absoluteHeadingSeen = true;
+
             }} else if (
-                event.type === "deviceorientationabsolute" &&
+                (event.type === "deviceorientationabsolute" ||
+                 event.absolute === true) &&
                 typeof event.alpha === "number"
             ) {{
-                heading = (360 - event.alpha) % 360;
+                heading = (360 - event.alpha + 360) % 360;
+                absoluteHeadingSeen = true;
+
             }} else if (
-                event.absolute === true &&
+                !absoluteHeadingSeen &&
                 typeof event.alpha === "number"
             ) {{
-                heading = (360 - event.alpha) % 360;
+                heading = (360 - event.alpha + 360) % 360;
             }}
 
             if (heading === null) return;
