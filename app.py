@@ -91,13 +91,23 @@ akhilam_map = folium.Map(
     zoom_start=map_zoom
 )
 
-# Show live location
+# Show live location with compass arrow
 if live_location:
-    folium.Marker(
+    live_marker = folium.Marker(
         live_location,
         popup="Your Current Location",
-        tooltip="You are here",
-        icon=folium.Icon(color="blue", icon="user")
+        tooltip="Your Location & Direction",
+        icon=folium.DivIcon(
+            html="""
+            <div class="akhilam-heading-arrow"
+                 style="font-size:35px;color:blue;
+                 transform:rotate(0deg);">
+                ▲
+            </div>
+            """,
+            icon_size=(40, 40),
+            icon_anchor=(20, 20)
+        )
     ).add_to(akhilam_map)
 
 # Show searched destination
