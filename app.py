@@ -301,16 +301,14 @@ st_folium(
 
 def load_nasa_netcdf(uploaded_file):
     try:
-        file_bytes = io.BytesIO(uploaded_file.getvalue())
+        file_bytes = uploaded_file.getvalue()
 
         dataset = xr.open_dataset(
-            file_bytes,
-            engine="netcdf4"
+            io.BytesIO(file_bytes),
+            engine="h5netcdf"
         )
 
         dataset.load()
-        dataset.close()
-
         return dataset
 
     except Exception as e:
