@@ -282,11 +282,7 @@ window.akhilamEnableCompass = enableCompass;
                 }}
             }}
 
-            button.addEventListener(
-                "click",
-                enableCompass
-            );
-
+            
         }}
 
         if (document.readyState === "loading") {{
