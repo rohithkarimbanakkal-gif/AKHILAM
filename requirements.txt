@@ -8,3 +8,4 @@ xarray
 netCDF4
 folium
 streamlit-folium
+h5netcdf
