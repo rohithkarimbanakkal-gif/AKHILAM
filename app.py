@@ -14,6 +14,25 @@ st.set_page_config(
 )
 
 st.title("AKHILAM")
+st.subheader("🗺️ AKHILAM Smart Navigation")
+
+# Kerala Interactive Map
+akhilam_map = folium.Map(
+    location=[10.8505, 76.2711],
+    zoom_start=7
+)
+
+folium.Marker(
+    [10.8505, 76.2711],
+    popup="Kerala",
+    tooltip="AKHILAM Map"
+).add_to(akhilam_map)
+
+st_folium(
+    akhilam_map,
+    width=700,
+    height=450
+)
 st.subheader("Earth System Trend Detective")
 st.caption("Earth Observation & Analysis Platform")
 
