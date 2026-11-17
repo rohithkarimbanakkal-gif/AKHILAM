@@ -31,6 +31,19 @@ with st.form("akhilam_search"):
         use_container_width=True
     )
 
+# Get device location
+location = streamlit_geolocation()
+
+live_location = None
+
+if isinstance(location, dict):
+    if location.get("latitude") is not None and location.get("longitude") is not None:
+        live_location = (
+            location["latitude"],
+            location["longitude"]
+        )
+
+# Search location
 search_location = None
 
 if place_name:
@@ -47,18 +60,24 @@ if place_name:
     except Exception:
         st.warning("Location search unavailable. Try again.")
 
+# Select map position
 if search_location:
     map_lat = search_location.latitude
     map_lon = search_location.longitude
     map_zoom = 12
-
     st.success(f"Location found: {search_location.address}")
+
+elif live_location:
+    map_lat, map_lon = live_location
+    map_zoom = 14
+    st.success("Your live location is available!")
 
 else:
     map_lat = 10.8505
     map_lon = 76.2711
     map_zoom = 7
 
+# Create map
 akhilam_map = folium.Map(
     location=[map_lat, map_lon],
     zoom_start=map_zoom
@@ -69,6 +88,14 @@ if search_location:
         [map_lat, map_lon],
         popup=place_name,
         tooltip="Searched Location"
+    ).add_to(akhilam_map)
+
+elif live_location:
+    folium.Marker(
+        [map_lat, map_lon],
+        popup="Your Current Location",
+        tooltip="📍 You are here",
+        icon=folium.Icon(color="blue", icon="user")
     ).add_to(akhilam_map)
 
 st_folium(
