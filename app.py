@@ -759,6 +759,12 @@ weather_date = st.date_input(
     value=date.today(),
     key="akhilam_weather_date"
 )
+weather_time = st.time_input(
+    "Select exact time (hourly)",
+    value=time(15, 0),
+    key="akhilam_weather_time",
+    step=3600
+)
 
 if st.button("🔍 Get Weather", key="akhilam_weather_search"):
 
