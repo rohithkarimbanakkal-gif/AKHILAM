@@ -863,7 +863,6 @@ if st.button("🔍 Get Weather", key="akhilam_weather_search"):
                     "No hourly weather data available "
                     "for this selected time."
                 )
-)
 
             else:
                 st.warning(
