@@ -736,4 +736,126 @@ if uploaded_file is not None:
         for variable in nasa_dataset.data_vars:
             st.write(f"Preview of {variable}")
             st.write(nasa_dataset[variable].values[:5])
+            
+# ==============================
+# AKHILAM WEATHER INTELLIGENCE
+# ==============================
+
+import requests
+import pandas as pd
+from datetime import date
+
+st.divider()
+st.header("🌦️ AKHILAM Weather Intelligence")
+st.caption("Live weather • Historical weather • Hourly forecast")
+
+weather_place = st.text_input(
+    "Search weather location",
+    placeholder="Enter a city or place"
+)
+
+weather_date = st.date_input(
+    "Select date",
+    value=date.today(),
+    key="akhilam_weather_date"
+)
+
+if st.button("🔍 Get Weather", key="akhilam_weather_search"):
+
+    try:
+        # Find coordinates for the searched place
+        geo_url = "https://geocoding-api.open-meteo.com/v1/search"
+
+        geo_response = requests.get(
+            geo_url,
+            params={
+                "name": weather_place,
+                "count": 1,
+                "language": "en",
+                "format": "json"
+            },
+            timeout=20
+        )
+
+        geo_data = geo_response.json()
+
+        if not geo_data.get("results"):
+            st.error("Location not found. Try another place.")
+
+        else:
+            location = geo_data["results"][0]
+
+            latitude = location["latitude"]
+            longitude = location["longitude"]
+
+            st.success(
+                f"Weather location: {location['name']}"
+            )
+
+            # Past weather or forecast
+            if weather_date < date.today():
+
+                weather_url = (
+                    "https://archive-api.open-meteo.com/v1/archive"
+                )
+
+            else:
+
+                weather_url = (
+                    "https://api.open-meteo.com/v1/forecast"
+                )
+
+            weather_response = requests.get(
+                weather_url,
+                params={
+                    "latitude": latitude,
+                    "longitude": longitude,
+                    "start_date": weather_date.isoformat(),
+                    "end_date": weather_date.isoformat(),
+                    "hourly": (
+                        "temperature_2m,"
+                        "relative_humidity_2m,"
+                        "precipitation,"
+                        "wind_speed_10m"
+                    ),
+                    "timezone": "Asia/Kolkata"
+                },
+                timeout=30
+            )
+
+            weather_data = weather_response.json()
+
+            if "hourly" in weather_data:
+
+                hourly = weather_data["hourly"]
+
+                weather_df = pd.DataFrame({
+                    "Time": hourly["time"],
+                    "Temperature (°C)": hourly["temperature_2m"],
+                    "Humidity (%)": hourly["relative_humidity_2m"],
+                    "Rain (mm)": hourly["precipitation"],
+                    "Wind (km/h)": hourly["wind_speed_10m"]
+                })
+
+                st.subheader("Hourly Weather Report")
+
+                st.dataframe(
+                    weather_df,
+                    use_container_width=True
+                )
+
+                st.line_chart(
+                    weather_df.set_index("Time")[
+                        "Temperature (°C)"
+                    ]
+                )
+
+            else:
+                st.warning(
+                    "Weather data is unavailable for this date."
+                )
+
+    except Exception as e:
+        st.error(f"Weather error: {e}")
+
 
