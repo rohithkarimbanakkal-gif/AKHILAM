@@ -843,7 +843,7 @@ if st.button("🔍 Get Weather", key="akhilam_weather_search"):
                     "Wind (km/h)": hourly["wind_speed_10m"]
                 })
 
-                                                   st.subheader("Weather at Selected Time")
+            st.subheader("Weather at Selected Time")
 
             selected_hour = weather_time.strftime("%H:00")
 
