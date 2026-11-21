@@ -406,11 +406,7 @@ if live_location and search_location:
             st.session_state.journey_started = False
             st.rerun()
 
-st_folium(
-    akhilam_map,
-    width=700,
-    height=450
-        )
+
 st.subheader("Earth System Trend Detective")
 st.caption("Earth Observation & Analysis Platform")
 
