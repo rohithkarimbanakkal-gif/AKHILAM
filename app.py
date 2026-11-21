@@ -743,7 +743,7 @@ if uploaded_file is not None:
 
 import requests
 import pandas as pd
-from datetime import date
+from datetime import date, time
 
 st.divider()
 st.header("🌦️ AKHILAM Weather Intelligence")
