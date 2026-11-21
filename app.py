@@ -409,6 +409,12 @@ if live_location and search_location:
 
 st.subheader("Earth System Trend Detective")
 st.caption("Earth Observation & Analysis Platform")
+st_folium(
+    akhilam_map,
+    width=700,
+    height=450,
+    key="akhilam_navigation_map"
+)
 
 st.markdown(
     "Investigating environmental changes "
