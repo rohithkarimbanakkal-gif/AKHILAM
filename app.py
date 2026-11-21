@@ -843,18 +843,28 @@ if st.button("🔍 Get Weather", key="akhilam_weather_search"):
                     "Wind (km/h)": hourly["wind_speed_10m"]
                 })
 
-                st.subheader("Hourly Weather Report")
+                st.subheader("Weather at Selected Time")
 
-                st.dataframe(
-                    weather_df,
-                    use_container_width=True
-                )
+selected_hour = weather_time.strftime("%H:00")
 
-                st.line_chart(
-                    weather_df.set_index("Time")[
-                        "Temperature (°C)"
-                    ]
-                )
+selected_weather = weather_df[
+    weather_df["Time"].str.endswith(
+        "T" + selected_hour
+    )
+]
+
+if not selected_weather.empty:
+
+    st.dataframe(
+        selected_weather,
+        use_container_width=True
+    )
+
+else:
+    st.warning(
+        "No hourly weather data available "
+        "for this selected time."
+    )
 
             else:
                 st.warning(
